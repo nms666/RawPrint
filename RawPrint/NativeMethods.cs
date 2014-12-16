@@ -6,7 +6,7 @@ namespace RawPrint
     // ReSharper disable InconsistentNaming
     // ReSharper disable FieldCanBeMadeReadOnly.Local
     [Flags]
-    public enum PRINTER_ACCESS_MASK : uint
+    internal enum PRINTER_ACCESS_MASK : uint
     {
         PRINTER_ACCESS_ADMINISTER = 0x00000004,
         PRINTER_ACCESS_USE = 0x00000008,
@@ -15,7 +15,7 @@ namespace RawPrint
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct PRINTER_DEFAULTS
+    internal struct PRINTER_DEFAULTS
     {
         public string pDatatype;
 
@@ -25,7 +25,7 @@ namespace RawPrint
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct DOC_INFO_1
+    internal struct DOC_INFO_1
     {
         public string pDocName;
 
@@ -35,14 +35,14 @@ namespace RawPrint
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct FILETIME
+    internal struct FILETIME
     {
         public uint DateTimeLow;
         public uint DateTimeHigh;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct DRIVER_INFO_8
+    internal struct DRIVER_INFO_8
     {
         public uint cVersion;
 
@@ -96,7 +96,7 @@ namespace RawPrint
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct PRINTER_INFO_2
+    internal struct PRINTER_INFO_2
     {
         [MarshalAs(UnmanagedType.LPTStr)]
         string pServerName;
@@ -152,7 +152,7 @@ namespace RawPrint
         uint AveragePPM;
     }
 
-    class NativeMethods
+    internal class NativeMethods
     {
         [DllImport("winspool.drv", SetLastError = true)]
         public static extern int ClosePrinter(IntPtr hPrinter);

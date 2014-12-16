@@ -92,8 +92,7 @@ namespace RawPrint
                     throw new Win32Exception();
                 }
 
-                var di8 = new DRIVER_INFO_8();
-                Marshal.PtrToStructure(ptr, di8);
+                var di8 = (DRIVER_INFO_8) Marshal.PtrToStructure(ptr, typeof(DRIVER_INFO_8));
 
                 return ReadMultiSz(di8.pDependentFiles).ToList(); // We need a list because FreeHGlobal will be called on return
             }
