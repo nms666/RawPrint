@@ -28,25 +28,16 @@ namespace RawPrint
 
             using (var safePrinter = SafePrinter.OpenPrinter(printer, ref defaults))
             {
-                DocPrinter(safePrinter, documentName, IsXPSDriver(printer) ? "XPS_PASS" : "RAW", stream);
+                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream);
             }
         }
 
-        private static bool IsXPSDriver(string printerName)
+        private static bool IsXPSDriver(SafePrinter printer)
         {
-            var defaults = new PRINTER_DEFAULTS
-            {
-                DesiredPrinterAccess = PRINTER_ACCESS_MASK.PRINTER_ACCESS_USE
-            };
+            var files = printer.GetPrinterDriverDependentFiles();
 
-            using (var printer = SafePrinter.OpenPrinter(printerName, ref defaults))
-            {
-                var files = printer.GetPrinterDriverDependentFiles();
-
-                return files.Any(f => f.EndsWith("-pipelineconfig.xml", StringComparison.InvariantCultureIgnoreCase));
-            }
+            return files.Any(f => f.EndsWith("-pipelineconfig.xml", StringComparison.InvariantCultureIgnoreCase));
         }
-
 
         private static void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream)
         {
