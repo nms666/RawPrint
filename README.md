@@ -12,3 +12,9 @@ Usage:
 	using RawPrint;
 	
 	Printer.PrintFile("Printer Name", "C:\Path\To\Print\File.prn", "Document Name");
+
+Installation:
+
+To install Raw Print, run the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)
+
+	PM> Install-Package RawPrint
