@@ -43,7 +43,6 @@ namespace RawPrint
         {
             try
             {
-                Console.WriteLine("Printing to type " + dataType);
                 var di1 = new DOC_INFO_1
                 {
                     pDataType = dataType,
