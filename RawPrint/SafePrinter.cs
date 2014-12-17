@@ -37,6 +37,10 @@ namespace RawPrint
         {
             if (NativeMethods.StartDocPrinterW(handle, 1, ref di1) == 0)
             {
+                if (Marshal.GetLastWin32Error() == 1804)
+                {
+                    throw new Exception("The specified datatype is invalid, try setting 'Enable advanced printing features' in printer properties.", new Win32Exception());
+                }
                 throw new Win32Exception(Marshal.GetLastWin32Error());
             }
         }
