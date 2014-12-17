@@ -41,7 +41,7 @@ namespace RawPrint
                 {
                     throw new Exception("The specified datatype is invalid, try setting 'Enable advanced printing features' in printer properties.", new Win32Exception());
                 }
-                throw new Win32Exception(Marshal.GetLastWin32Error());
+                throw new Win32Exception();
             }
         }
 
@@ -49,7 +49,7 @@ namespace RawPrint
         {
             if (NativeMethods.EndDocPrinter(handle) == 0)
             {
-                throw new Win32Exception(Marshal.GetLastWin32Error());
+                throw new Win32Exception();
             }
         }
 
@@ -57,7 +57,7 @@ namespace RawPrint
         {
             if (NativeMethods.StartPagePrinter(handle) == 0)
             {
-                throw new Win32Exception(Marshal.GetLastWin32Error());
+                throw new Win32Exception();
             }
         }
 
@@ -65,7 +65,7 @@ namespace RawPrint
         {
             if (NativeMethods.EndPagePrinter(handle) == 0)
             {
-                throw new Win32Exception(Marshal.GetLastWin32Error());
+                throw new Win32Exception();
             }
         }
 
