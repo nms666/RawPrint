@@ -34,66 +34,21 @@ namespace RawPrint
         public string pDataType;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct FILETIME
-    {
-        public uint DateTimeLow;
-        public uint DateTimeHigh;
-    }
-
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    internal struct DRIVER_INFO_8
+    internal struct DRIVER_INFO_3
     {
         public uint cVersion;
-
         public string pName;
-
         public string pEnvironment;
-
         public string pDriverPath;
-
         public string pDataFile;
-
         public string pConfigFile;
-
         public string pHelpFile;
-
         public IntPtr pDependentFiles;
-
         public string pMonitorName;
-
         public string pDefaultDataType;
-
-        public string pszzPreviousNames;
-
-        FILETIME ftDriverDate;
-
-        UInt64 dwlDriverVersion;
-
-        public string pszMfgName;
-
-        public string pszOEMUrl;
-
-        public string pszHardwareID;
-
-        public string pszProvider;
-
-        public string pszPrintProcessor;
-
-        public string pszVendorSetup;
-
-        public string pszzColorProfiles;
-
-        public string pszInfPath;
-
-        public uint dwPrinterDriverAttributes;
-
-        public string pszzCoreDriverDependencies;
-
-        FILETIME ftMinInboxDriverVerDate;
-
-        UInt64 dwlMinInboxDriverVerVersion;
     }
+
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct PRINTER_INFO_2

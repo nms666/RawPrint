@@ -78,7 +78,7 @@ namespace RawPrint
         {
             int bufferSize = 0;
 
-            if (NativeMethods.GetPrinterDriver(handle, null, 8, IntPtr.Zero, 0, ref bufferSize) != 0 || Marshal.GetLastWin32Error() != 122) // 122 = ERROR_INSUFFICIENT_BUFFER
+            if (NativeMethods.GetPrinterDriver(handle, null, 3, IntPtr.Zero, 0, ref bufferSize) != 0 || Marshal.GetLastWin32Error() != 122) // 122 = ERROR_INSUFFICIENT_BUFFER
             {
                 throw new Win32Exception();
             }
@@ -87,14 +87,14 @@ namespace RawPrint
 
             try
             {
-                if (NativeMethods.GetPrinterDriver(handle, null, 8, ptr, bufferSize, ref bufferSize) == 0)
+                if (NativeMethods.GetPrinterDriver(handle, null, 3, ptr, bufferSize, ref bufferSize) == 0)
                 {
                     throw new Win32Exception();
                 }
 
-                var di8 = (DRIVER_INFO_8) Marshal.PtrToStructure(ptr, typeof(DRIVER_INFO_8));
+                var di3 = (DRIVER_INFO_3) Marshal.PtrToStructure(ptr, typeof(DRIVER_INFO_3));
 
-                return ReadMultiSz(di8.pDependentFiles).ToList(); // We need a list because FreeHGlobal will be called on return
+                return ReadMultiSz(di3.pDependentFiles).ToList(); // We need a list because FreeHGlobal will be called on return
             }
             finally
             {
