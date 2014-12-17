@@ -41,15 +41,16 @@ namespace RawPrint
 
         private static void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream)
         {
+            var di1 = new DOC_INFO_1
+            {
+                pDataType = dataType,
+                pDocName = documentName,
+            };
+
+            printer.StartDocPrinter(di1);
+
             try
             {
-                var di1 = new DOC_INFO_1
-                {
-                    pDataType = dataType,
-                    pDocName = documentName,
-                };
-
-                printer.StartDocPrinter(di1);
                 PagePrinter(printer, stream);
             }
             finally
@@ -60,9 +61,10 @@ namespace RawPrint
 
         private static void PagePrinter(SafePrinter printer, Stream stream)
         {
+            printer.StartPagePrinter();
+
             try
             {
-                printer.StartPagePrinter();
                 WritePrinter(printer, stream);
             }
             finally
