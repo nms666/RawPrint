@@ -50,63 +50,6 @@ namespace RawPrint
     }
 
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    internal struct PRINTER_INFO_2
-    {
-        [MarshalAs(UnmanagedType.LPTStr)]
-        string pServerName;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        public string pPrinterName;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        string pShareName;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        public string pPortName;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        public string pDriverName;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        string pComment;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        string pLocation;
-
-        IntPtr pDevMode;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        string pSepFile;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        string pPrintProcessor;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        string pDatatype;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        string pParameters;
-
-        IntPtr pSecurityDescriptor;
-
-        uint Attributes;
-
-        uint Priority;
-
-        uint DefaultPriority;
-
-        uint StartTime;
-
-        uint UntilTime;
-
-        uint Status;
-
-        uint cJobs;
-
-        uint AveragePPM;
-    }
-
     internal class NativeMethods
     {
         [DllImport("winspool.drv", SetLastError = true)]
