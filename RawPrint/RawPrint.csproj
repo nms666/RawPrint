@@ -40,6 +40,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SafePrinter.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="RawPrint.nuspec" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release nuget pack "$(ProjectPath)" -Prop Configuration=Release</PostBuildEvent>
