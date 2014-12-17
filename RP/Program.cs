@@ -6,13 +6,20 @@ namespace RP
     {
         static void Main(string[] args)
         {
-            if (args.Length != 2)
+            try
             {
-                Console.WriteLine("Syntax:\n\n    rp <printer name> <file name>\n");
-                return;
-            }
+                if (args.Length != 2)
+                {
+                    Console.WriteLine("Syntax:\n\n    rp <printer name> <file name>\n");
+                    return;
+                }
 
-            RawPrint.Printer.PrintFile(args[0], args[1], args[1]);
+                RawPrint.Printer.PrintFile(args[0], args[1], args[1]);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+            }
         }
     }
 }
