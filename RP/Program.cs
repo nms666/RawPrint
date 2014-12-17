@@ -1,4 +1,5 @@
 ﻿using System;
+using RawPrint;
 
 namespace RP
 {
@@ -14,7 +15,7 @@ namespace RP
                     return;
                 }
 
-                RawPrint.Printer.PrintFile(args[0], args[1], args[1]);
+                Printer.PrintFile(args[0], args[1], args[1]);
             }
             catch (Exception e)
             {
