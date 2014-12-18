@@ -4,13 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Microsoft.Win32.SafeHandles;
 
 namespace RawPrint
 {
-    internal class SafePrinter : SafeHandle
+    internal class SafePrinter : SafeHandleZeroOrMinusOneIsInvalid 
     {
         private SafePrinter(IntPtr hPrinter)
-            : base(IntPtr.Zero, true)
+            : base(true)
         {
             handle = hPrinter;
         }
@@ -26,11 +27,6 @@ namespace RawPrint
             handle = IntPtr.Zero;
 
             return result;
-        }
-
-        public override bool IsInvalid
-        {
-            get { return handle == IntPtr.Zero; }
         }
 
         public void StartDocPrinter(DOC_INFO_1 di1)
