@@ -14,7 +14,7 @@ namespace RawPrint
             }
         }
 
-        public static void Printfile(string printer, string path)
+        public static void PrintFile(string printer, string path)
         {
             PrintFile(printer, path, path);
         }
