@@ -11,7 +11,7 @@ Usage:
 
 	using RawPrint;
 	
-	Printer.PrintFile("Printer Name", "C:\Path\To\Print\File.prn", "Document Name");
+	Printer.PrintFile("Printer Name", @"C:\Path\To\Print\File.prn", "Document Name");
 
 Installation:
 
