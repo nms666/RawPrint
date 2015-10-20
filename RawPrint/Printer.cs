@@ -36,7 +36,7 @@ namespace RawPrint
         {
             var files = printer.GetPrinterDriverDependentFiles();
 
-            return files.Any(f => f.EndsWith("-pipelineconfig.xml", StringComparison.InvariantCultureIgnoreCase));
+            return files.Any(f => f.EndsWith("pipelineconfig.xml", StringComparison.InvariantCultureIgnoreCase));
         }
 
         private static void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream)
