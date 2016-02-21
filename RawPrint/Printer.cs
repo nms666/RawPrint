@@ -6,20 +6,20 @@ namespace RawPrint
 {
     public class Printer : IPrinter
     {
-        public void PrintRawFile(string printer, string path, string documentName)
+        public void PrintRawFile(string printer, string path, bool paused)
+        {
+            PrintRawFile(printer, path, path, paused);
+        }
+
+        public void PrintRawFile(string printer, string path, string documentName, bool paused)
         {
             using (var stream = File.OpenRead(path))
             {
-                PrintRawStream(printer, stream, documentName);
+                PrintRawStream(printer, stream, documentName, paused);
             }
         }
 
-        public void PrintRawFile(string printer, string path)
-        {
-            PrintRawFile(printer, path, path);
-        }
-
-        public void PrintRawStream(string printer, Stream stream, string documentName)
+        public void PrintRawStream(string printer, Stream stream, string documentName, bool paused)
         {
             var defaults = new PRINTER_DEFAULTS
             {
@@ -28,7 +28,7 @@ namespace RawPrint
 
             using (var safePrinter = SafePrinter.OpenPrinter(printer, ref defaults))
             {
-                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream);
+                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, paused);
             }
         }
 
@@ -39,7 +39,7 @@ namespace RawPrint
             return files.Any(f => f.EndsWith("pipelineconfig.xml", StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private static void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream)
+        private static void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream, bool paused)
         {
             var di1 = new DOC_INFO_1
             {
@@ -47,7 +47,12 @@ namespace RawPrint
                 pDocName = documentName,
             };
 
-            printer.StartDocPrinter(di1);
+            var id = printer.StartDocPrinter(di1);
+
+            if (paused)
+            {
+                NativeMethods.SetJob(printer.DangerousGetHandle(), id, 0, IntPtr.Zero, (int) JobControl.Pause);
+            }
 
             try
             {
@@ -112,7 +117,7 @@ namespace RawPrint
 
             using (var safePrinter = SafePrinter.OpenPrinter(printer, ref defaults))
             {
-                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream);
+                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, false);
             }
         }
     }

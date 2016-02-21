@@ -29,9 +29,10 @@ namespace RawPrint
             return result;
         }
 
-        public void StartDocPrinter(DOC_INFO_1 di1)
+        public int StartDocPrinter(DOC_INFO_1 di1)
         {
-            if (NativeMethods.StartDocPrinterW(handle, 1, ref di1) == 0)
+            var id = NativeMethods.StartDocPrinterW(handle, 1, ref di1);
+            if (id == 0)
             {
                 if (Marshal.GetLastWin32Error() == 1804)
                 {
@@ -39,6 +40,8 @@ namespace RawPrint
                 }
                 throw new Win32Exception();
             }
+
+            return id;
         }
 
         public void EndDocPrinter()

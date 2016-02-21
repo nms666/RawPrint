@@ -49,6 +49,16 @@ namespace RawPrint
         public string pDefaultDataType;
     }
 
+    public enum JobControl
+    {
+        Pause = 0x01,
+        Resume = 0x02,
+        Cancel = 0x03,
+        Restart = 0x04,
+        Delete = 0x05,
+        Retain = 0x08,
+        Release = 0x09,
+    }
 
     internal class NativeMethods
     {
@@ -76,6 +86,8 @@ namespace RawPrint
         [DllImport("winspool.drv", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern int OpenPrinterW(string pPrinterName, out IntPtr phPrinter, ref PRINTER_DEFAULTS pDefault);
 
+        [DllImport("winspool.drv", EntryPoint = "SetJobA", SetLastError = true)]
+        public static extern int SetJob(IntPtr hPrinter, int JobId, int Level, IntPtr pJob, int Command_Renamed);
     }
 
 
