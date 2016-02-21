@@ -15,7 +15,8 @@ namespace RP
                     return;
                 }
 
-                Printer.PrintFile(args[0], args[1], args[1]);
+                var printer = new Printer();
+                printer.PrintRawFile(args[0], args[1], args[1]);
             }
             catch (Exception e)
             {

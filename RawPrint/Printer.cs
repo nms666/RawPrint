@@ -6,20 +6,20 @@ namespace RawPrint
 {
     public class Printer
     {
-        public static void PrintFile(string printer, string path, string documentName)
+        public void PrintRawFile(string printer, string path, string documentName)
         {
             using (var stream = File.OpenRead(path))
             {
-                PrintStream(printer, stream, documentName);
+                PrintRawStream(printer, stream, documentName);
             }
         }
 
-        public static void PrintFile(string printer, string path)
+        public void PrintRawFile(string printer, string path)
         {
-            PrintFile(printer, path, path);
+            PrintRawFile(printer, path, path);
         }
 
-        public static void PrintStream(string printer, Stream stream, string documentName)
+        public void PrintRawStream(string printer, Stream stream, string documentName)
         {
             var defaults = new PRINTER_DEFAULTS
             {
@@ -84,6 +84,35 @@ namespace RawPrint
             while ((read = stream.Read(buffer, 0, bufferSize)) != 0)
             {
                 printer.WritePrinter(buffer, read);
+            }
+        }
+
+        [Obsolete]
+        public static void PrintFile(string printer, string path, string documentName)
+        {
+            using (var stream = File.OpenRead(path))
+            {
+                PrintStream(printer, stream, documentName);
+            }
+        }
+
+        [Obsolete]
+        public static void PrintFile(string printer, string path)
+        {
+            PrintFile(printer, path, path);
+        }
+
+        [Obsolete]
+        public static void PrintStream(string printer, Stream stream, string documentName)
+        {
+            var defaults = new PRINTER_DEFAULTS
+            {
+                DesiredPrinterAccess = PRINTER_ACCESS_MASK.PRINTER_ACCESS_USE
+            };
+
+            using (var safePrinter = SafePrinter.OpenPrinter(printer, ref defaults))
+            {
+                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream);
             }
         }
     }
