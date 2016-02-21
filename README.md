@@ -20,5 +20,6 @@ To install Raw Print, run the following command in the [Package Manager Console]
 	PM> Install-Package RawPrint
 
 2016-02-21	Static methods are now obsolete.
+			Introduced IPrinter interface.
 
 2015-10-20	Fixed an issue with some HP drivers that misname their pipelineconfig.xml file.

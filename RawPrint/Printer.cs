@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RawPrint
 {
-    public class Printer
+    public class Printer : IPrinter
     {
         public void PrintRawFile(string printer, string path, string documentName)
         {
