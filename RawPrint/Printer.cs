@@ -21,6 +21,11 @@ namespace RawPrint
 
         public void PrintRawStream(string printer, Stream stream, string documentName, bool paused)
         {
+            PrintRawStream(printer, stream, documentName, paused, 1);
+        }
+
+        public void PrintRawStream(string printer, Stream stream, string documentName, bool paused, int pagecount)
+        {
             var defaults = new PRINTER_DEFAULTS
             {
                 DesiredPrinterAccess = PRINTER_ACCESS_MASK.PRINTER_ACCESS_USE
@@ -28,7 +33,7 @@ namespace RawPrint
 
             using (var safePrinter = SafePrinter.OpenPrinter(printer, ref defaults))
             {
-                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, paused);
+                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, paused, pagecount);
             }
         }
 
@@ -39,7 +44,7 @@ namespace RawPrint
             return files.Any(f => f.EndsWith("pipelineconfig.xml", StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private static void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream, bool paused)
+        private static void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream, bool paused, int pagecount)
         {
             var di1 = new DOC_INFO_1
             {
@@ -56,7 +61,7 @@ namespace RawPrint
 
             try
             {
-                PagePrinter(printer, stream);
+                PagePrinter(printer, stream, pagecount);
             }
             finally
             {
@@ -64,7 +69,7 @@ namespace RawPrint
             }
         }
 
-        private static void PagePrinter(SafePrinter printer, Stream stream)
+        private static void PagePrinter(SafePrinter printer, Stream stream, int pagecount)
         {
             printer.StartPagePrinter();
 
@@ -74,6 +79,13 @@ namespace RawPrint
             }
             finally
             {
+                printer.EndPagePrinter();
+            }
+
+            // Fix the page count in the final document
+            for (int i = 1; i < pagecount; i++)
+            {
+                printer.StartPagePrinter();
                 printer.EndPagePrinter();
             }
         }
@@ -117,7 +129,7 @@ namespace RawPrint
 
             using (var safePrinter = SafePrinter.OpenPrinter(printer, ref defaults))
             {
-                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, false);
+                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, false, 1);
             }
         }
     }

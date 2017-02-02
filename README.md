@@ -19,6 +19,10 @@ To install Raw Print, run the following command in the [Package Manager Console]
 
 	PM> Install-Package RawPrint
 
+*2017-02-02*
+
+If you supply a page count this is now reflected in the print job information in the spooled document.
+
 *2016-02-21*
 
 Static methods are now obsolete.
