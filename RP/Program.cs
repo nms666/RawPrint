@@ -16,6 +16,7 @@ namespace RP
                 }
 
                 IPrinter printer = new Printer();
+                printer.OnJobCreated += (sender, eventArgs) => { Console.WriteLine("Job started."); };
                 printer.PrintRawFile(args[0], args[1], args[1]);
             }
             catch (Exception e)

@@ -69,7 +69,7 @@ namespace RawPrint
         public static extern int GetPrinterDriver(IntPtr hPrinter, string pEnvironment, int Level, IntPtr pDriverInfo, int cbBuf, ref int pcbNeeded);
 
         [DllImport("winspool.drv", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern int StartDocPrinterW(IntPtr hPrinter, uint level, [MarshalAs(UnmanagedType.Struct)] ref DOC_INFO_1 di1);
+        public static extern uint StartDocPrinterW(IntPtr hPrinter, uint level, [MarshalAs(UnmanagedType.Struct)] ref DOC_INFO_1 di1);
 
         [DllImport("winspool.drv", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern int EndDocPrinter(IntPtr hPrinter);
@@ -87,7 +87,7 @@ namespace RawPrint
         public static extern int OpenPrinterW(string pPrinterName, out IntPtr phPrinter, ref PRINTER_DEFAULTS pDefault);
 
         [DllImport("winspool.drv", EntryPoint = "SetJobA", SetLastError = true)]
-        public static extern int SetJob(IntPtr hPrinter, int JobId, int Level, IntPtr pJob, int Command_Renamed);
+        public static extern int SetJob(IntPtr hPrinter, uint JobId, uint Level, IntPtr pJob, uint Command_Renamed);
     }
 
 

@@ -29,7 +29,7 @@ namespace RawPrint
             return result;
         }
 
-        public int StartDocPrinter(DOC_INFO_1 di1)
+        public uint StartDocPrinter(DOC_INFO_1 di1)
         {
             var id = NativeMethods.StartDocPrinterW(handle, 1, ref di1);
             if (id == 0)

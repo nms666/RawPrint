@@ -6,6 +6,8 @@ namespace RawPrint
 {
     public class Printer : IPrinter
     {
+        public event JobCreatedHandler OnJobCreated;
+
         public void PrintRawFile(string printer, string path, bool paused)
         {
             PrintRawFile(printer, path, path, paused);
@@ -44,7 +46,7 @@ namespace RawPrint
             return files.Any(f => f.EndsWith("pipelineconfig.xml", StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private static void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream, bool paused, int pagecount)
+        private void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream, bool paused, int pagecount)
         {
             var di1 = new DOC_INFO_1
             {
@@ -58,6 +60,8 @@ namespace RawPrint
             {
                 NativeMethods.SetJob(printer.DangerousGetHandle(), id, 0, IntPtr.Zero, (int) JobControl.Pause);
             }
+
+            OnJobCreated?.Invoke(this, new JobCreatedEventArgs {Id = id});
 
             try
             {
@@ -129,7 +133,8 @@ namespace RawPrint
 
             using (var safePrinter = SafePrinter.OpenPrinter(printer, ref defaults))
             {
-                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, false, 1);
+                var ptr = new Printer();
+                ptr.DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, false, 1);
             }
         }
     }
