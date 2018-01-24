@@ -6,6 +6,7 @@ namespace RawPrint
     public class JobCreatedEventArgs : EventArgs
     {
         public uint Id { get; set; }
+        public string PrinterName { get; set; }
     }
 
     public delegate void JobCreatedHandler(object sender, JobCreatedEventArgs e);

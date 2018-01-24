@@ -35,7 +35,7 @@ namespace RawPrint
 
             using (var safePrinter = SafePrinter.OpenPrinter(printer, ref defaults))
             {
-                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, paused, pagecount);
+                DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, paused, pagecount, printer);
             }
         }
 
@@ -46,7 +46,7 @@ namespace RawPrint
             return files.Any(f => f.EndsWith("pipelineconfig.xml", StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream, bool paused, int pagecount)
+        private void DocPrinter(SafePrinter printer, string documentName, string dataType, Stream stream, bool paused, int pagecount, string printerName)
         {
             var di1 = new DOC_INFO_1
             {
@@ -61,7 +61,7 @@ namespace RawPrint
                 NativeMethods.SetJob(printer.DangerousGetHandle(), id, 0, IntPtr.Zero, (int) JobControl.Pause);
             }
 
-            OnJobCreated?.Invoke(this, new JobCreatedEventArgs {Id = id});
+            OnJobCreated?.Invoke(this, new JobCreatedEventArgs {Id = id, PrinterName = printerName});
 
             try
             {
@@ -134,7 +134,7 @@ namespace RawPrint
             using (var safePrinter = SafePrinter.OpenPrinter(printer, ref defaults))
             {
                 var ptr = new Printer();
-                ptr.DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, false, 1);
+                ptr.DocPrinter(safePrinter, documentName, IsXPSDriver(safePrinter) ? "XPS_PASS" : "RAW", stream, false, 1, printer);
             }
         }
     }
