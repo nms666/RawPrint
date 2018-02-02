@@ -9,9 +9,9 @@ Requires .Net 4 runtime on Windows XP to 10 and Server 2003 to 2012.
 
 Usage:
 
-	using RawPrint;
+        using RawPrint;
 	
-	// Create an instance of the Printer
+        // Create an instance of the Printer
         IPrinter printer = new Printer();
     
         // Print the file
